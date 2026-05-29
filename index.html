@@ -1856,14 +1856,14 @@ function renderMachines(){autoSave&&autoSave();
     if(brV>vMax)tags+='<span class="tag t-red">⚠ v élevée</span>';
     // Dropdown options — short name only, no velocities
     var tOpts=MT.map(function(cat){return '<optgroup label="── '+cat.cat+'">'+cat.items.map(function(it){return '<option value="'+it.n+'"'+(m.type===it.n?' selected':'')+'>'+it.s+'</option>';}).join('')+'</optgroup>';}).join('');
-    // Raccords list — LIGHT : saisie directe du débit Q (pas de diamètre)
+    // Raccords list — saisie par diamètre Ø (comme version complète)
     var raccH=m.raccords.map(function(r,ri){
-      // Q = soit saisi directement (r.q), soit calculé à partir du Ø existant
-      var directQ=r.q!==undefined?r.q:(parseFloat(r.d)?calcQ(parseFloat(r.d),vTrans):'');
+      var rd=parseFloat(r.d)||0,rq=rd?calcQ(rd,vTrans):0;
+      var rqS=rq?'<span class="tag t-purple" style="font-size:10px">'+rq+' m³/h</span>':'';
       var del=m.raccords.length>1?'<button class="btn-x" onclick="delRacc('+m.id+','+ri+')">✕</button>':'';
-      return '<div class="racc"><span style="font-size:10px;color:var(--txt3);width:50px">Bouche '+(ri+1)+'</span>'
-        +'<input type="number" value="'+directQ+'" placeholder="Débit (m³/h)" style="min-width:120px" oninput="updRaccQ('+m.id+','+ri+',this.value)"/>'
-        +'<span style="font-size:11px;color:var(--txt3)">m³/h</span>'+del+'</div>';
+      return '<div class="racc"><span style="font-size:10px;color:var(--txt3);width:16px">#'+(ri+1)+'</span>'
+        +'<input type="number" value="'+(r.d||'')+'" placeholder="Ø mm" oninput="updRacc('+m.id+','+ri+',this.value)"/>'
+        +'<span style="font-size:11px;color:var(--txt3)">mm</span>'+rqS+del+'</div>';
     }).join('');
     // Descente summary row — LIGHT : seulement le débit total
     var descRow='<div style="display:flex;align-items:center;gap:6px;padding:6px 0;border-top:1px solid var(--border);margin-top:5px;flex-wrap:wrap">'
