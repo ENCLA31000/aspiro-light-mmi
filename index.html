@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-<title>AspiRo_light V1.0 - relevés</title>
+<title>AspiRo_light V1.1 - relevés</title>
 
 <!-- ══ PWA META TAGS ══ -->
 <meta name="application-name" content="AspiRo_light"/>
@@ -26,7 +26,7 @@
 <!-- Manifest PWA inline -->
 <link rel="manifest" href="data:application/manifest+json,{
   %22name%22:%22AspiRo_light%20-%20relev%C3%A9s%22,
-  %22short_name%22:%22AspiRo_light%20V1.0%22,
+  %22short_name%22:%22AspiRo_light%20V1.1%22,
   %22description%22:%22AspiRo_light%20%E2%80%94%20Outil%20relev%C3%A9%20r%C3%A9seau%20d'aspiration%22,
   %22start_url%22:%22./%22,
   %22display%22:%22standalone%22,
@@ -287,7 +287,7 @@ tr:last-child td{border-bottom:none}
       Accéder →
     </button>
   </div>
-  <div style="font-size:10px;color:#334155">AspiRo_light v1.0 · by Carlos L.</div>
+  <div style="font-size:10px;color:#334155">AspiRo_light v1.1 · by Carlos L.</div>
 </div>
 
 <script>
@@ -328,12 +328,13 @@ function checkLogin(){
 <div class="hdr">
   <span style="font-size:28px">🌬️</span>
   <div>
-    <div class="hdr-t">AspiRo_light — v1.0</div>
+    <div class="hdr-t">AspiRo_light — v1.1</div>
     <div class="hdr-s">Outil — Relevé réseau d'aspiration</div>
   </div>
   <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
-  <div class="hdr-v">v1.0 LIGHT</div>
+  <div class="hdr-v">v1.1 LIGHT</div>
   <div id="autosave-ts" style="font-size:9px;color:var(--txt3)"></div>
+  <div id="storage-bar" style="margin-top:4px"></div>
 </div>
 </div>
 <div class="tabs">
@@ -1105,7 +1106,7 @@ function checkLogin(){
 </div>
 
 <div style="text-align:center;padding:18px 0 8px;font-size:10px;color:var(--txt3);letter-spacing:.5px;user-select:none">
-  AspiRo_light v1.0 &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; by Carlos L.
+  AspiRo_light v1.1 &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; by Carlos L.
 </div>
 
 <script>
@@ -3370,7 +3371,7 @@ function drawPlan(cv,forPdf){
     ctx.fillStyle='rgba(249,115,22,.7)';ctx.font='10px system-ui';ctx.textAlign='left';ctx.fillText(hints[planMode]||'',PAD,H-PAD+12);
   }
   ctx.fillStyle=forPdf?'#94a3b8':'#64748b';ctx.font='8px system-ui';ctx.textAlign='right';
-  ctx.fillText((document.getElementById('a-nom').value||'Atelier')+' — AspiRo_light v1.0',W-PAD,H-PAD+12);
+  ctx.fillText((document.getElementById('a-nom').value||'Atelier')+' — AspiRo_light v1.1',W-PAD,H-PAD+12);
 }
 
 // ── SCHEMA LINEAIRE (fond blanc, anti-chevauchement, distances) ───────────────
@@ -3402,7 +3403,7 @@ function drawSchemaNet(netId){
   // Titre
   var netColor=netId==='B'?'#0e7490':'#334155';
   ctx.fillStyle=netColor;ctx.font='bold 11px system-ui';ctx.textAlign='left';
-  ctx.fillText('Schéma linéaire Réseau '+netId+' — '+(document.getElementById('a-nom').value||'Atelier')+' — AspiRo_light v1.0',MARG,16);
+  ctx.fillText('Schéma linéaire Réseau '+netId+' — '+(document.getElementById('a-nom').value||'Atelier')+' — AspiRo_light v1.1',MARG,16);
   // Axe collecteur (couleur selon réseau)
   var collColor=netId==='B'?'#0e7490':'#334155';
   ctx.strokeStyle=collColor;ctx.lineWidth=2.5;ctx.setLineDash([]);
@@ -3618,7 +3619,7 @@ function drawSchema(){
 
   // Titre
   ctx.fillStyle='#334155';ctx.font='bold 11px system-ui';ctx.textAlign='left';
-  ctx.fillText('Schéma linéaire — '+(document.getElementById('a-nom').value||'Atelier')+' — AspiRo_light v1.0',MARG,16);
+  ctx.fillText('Schéma linéaire — '+(document.getElementById('a-nom').value||'Atelier')+' — AspiRo_light v1.1',MARG,16);
   // Légende simple
   var lx=MARG;
   [['#2563eb','Actif (simul.)','circle'],['#475569','Machine','rect']].forEach(function(l){
@@ -5724,7 +5725,7 @@ function exportPDF(){
     +'@page{margin:1.4cm}@media print{.page{padding:0}}'
     +'</style></head><body>'
     +'<div class="cover">'
-    +'<h1>AspiRo_light — v1.0</h1>'
+    +'<h1>AspiRo_light — v1.1</h1>'
     +'<div class="sub">Outil — Relevé réseau d\'aspiration</div>'
     +(clt.societe?'<div style="font-size:18px;font-weight:800;color:#fff;margin:8px 0">'+clt.societe+'</div>':'')
     +(clt.adresse?'<div style="font-size:12px;color:#94a3b8;margin-bottom:4px">📍 '+clt.adresse+'</div>':'')
@@ -5870,7 +5871,7 @@ function exportPDF(){
       }
       return out;
     })()
-    +'<div style="margin-top:22px;padding-top:11px;border-top:1px solid #e2e8f0;font-size:10px;color:#94a3b8;text-align:center">AspiRo_light v1.0 — '+new Date().toLocaleDateString('fr-FR')+' — Darcy-Weisbach lambda='+p.lam+' K_c=0.5 K_t=1.0 K_e=0.5</div>'
+    +'<div style="margin-top:22px;padding-top:11px;border-top:1px solid #e2e8f0;font-size:10px;color:#94a3b8;text-align:center">AspiRo_light v1.1 — '+new Date().toLocaleDateString('fr-FR')+' — Darcy-Weisbach lambda='+p.lam+' K_c=0.5 K_t=1.0 K_e=0.5</div>'
     +'<div style="position:fixed;top:14px;right:16px;z-index:999">'
     +'<button onclick="window.print()" style="background:#f97316;color:#fff;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(249,115,22,.35)">🖨️ Imprimer / Enregistrer PDF</button>'
     +'</div>'
@@ -5886,55 +5887,167 @@ function exportPDF(){
 
 // ── AUTOSAUVEGARDE localStorage ─────────────────────────────────────────────
 var _autoSaveTimer=null;
+
+// ── COUCHE INDEXEDDB (limite plusieurs Go vs 5 Mo localStorage) ──────────────
+var idbDB=null;
+function idbInit(){
+  return new Promise(function(resolve){
+    if(!window.indexedDB){resolve(false);return;}
+    var req=indexedDB.open('AsPIRoDB',1);
+    req.onupgradeneeded=function(e){
+      var db=e.target.result;
+      if(!db.objectStoreNames.contains('store'))db.createObjectStore('store');
+    };
+    req.onsuccess=function(e){idbDB=e.target.result;resolve(true);};
+    req.onerror=function(){resolve(false);};
+  });
+}
+function idbGet(key){
+  return new Promise(function(resolve){
+    if(!idbDB){resolve(null);return;}
+    try{
+      var tx=idbDB.transaction(['store'],'readonly');
+      var req=tx.objectStore('store').get(key);
+      req.onsuccess=function(){resolve(req.result||null);};
+      req.onerror=function(){resolve(null);};
+    }catch(e){resolve(null);}
+  });
+}
+function idbSet(key,value){
+  return new Promise(function(resolve,reject){
+    if(!idbDB){reject(new Error('IDB non disponible'));return;}
+    try{
+      var tx=idbDB.transaction(['store'],'readwrite');
+      tx.objectStore('store').put(value,key);
+      tx.oncomplete=function(){resolve();};
+      tx.onerror=function(){reject(tx.error||new Error('IDB write failed'));};
+    }catch(e){reject(e);}
+  });
+}
+function idbRemove(key){
+  return new Promise(function(resolve){
+    if(!idbDB){resolve();return;}
+    try{
+      var tx=idbDB.transaction(['store'],'readwrite');
+      tx.objectStore('store').delete(key);
+      tx.oncomplete=function(){resolve();};
+      tx.onerror=function(){resolve();};
+    }catch(e){resolve();}
+  });
+}
+// Estimation de l'espace utilisé
+function idbEstimate(){
+  return new Promise(function(resolve){
+    if(navigator.storage&&navigator.storage.estimate){
+      navigator.storage.estimate().then(function(est){resolve(est);}).catch(function(){resolve(null);});
+    } else resolve(null);
+  });
+}
+
 var AUTOSAVE_KEY='aspiro_mmi_autosave';
+var _lastStorageBytes=0;
 
 function autoSave(){
-  // Debounce 2s pour éviter les sauvegardes trop fréquentes
+  // Debounce 2s
   clearTimeout(_autoSaveTimer);
   _autoSaveTimer=setTimeout(function(){
     try{
       var data=collectAllData();
       var json=JSON.stringify(data);
-      // localStorage a une limite de ~5-10 Mo selon les navigateurs
-      // Avertir si proche de la limite
-      if(json.length > 4*1024*1024){
-        // > 4 Mo : sauvegarder sans les photos pour ne pas dépasser
-        var light=JSON.parse(json);
-        light.atelier.photosGen=[];
-        light.atelier.photosDem=[];
-        light.environnement.photos=[];
-        light.machines=light.machines.map(function(m){return Object.assign({},m,{photos:[null,null,null]});});
-        json=JSON.stringify(light);
-        showInfo && showInfo('Sauveg. auto (photos exclues — taille > 4Mo)',2000);
-      }
-      localStorage.setItem(AUTOSAVE_KEY, json);
-      // Mettre à jour le timestamp affiché
-      var el=document.getElementById('autosave-ts');
-      if(el) el.textContent='Sauvegardé à '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+      _lastStorageBytes=json.length;
+      // Sauvegarde IndexedDB (limite plusieurs Go, vs 5 Mo localStorage)
+      idbSet(AUTOSAVE_KEY, json).then(function(){
+        var el=document.getElementById('autosave-ts');
+        if(el) el.textContent='Sauvegardé à '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
+        updateStorageIndicator();
+      }).catch(function(err){
+        // Fallback localStorage si IndexedDB échoue
+        try{
+          localStorage.setItem(AUTOSAVE_KEY, json);
+          var el=document.getElementById('autosave-ts');
+          if(el) el.textContent='Sauvegardé à '+new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})+' (mode dégradé)';
+        }catch(quotaErr){
+          console.warn('[AspiRo_light] autoSave échoué:',quotaErr.message);
+          showInfo && showInfo('⚠ Stockage saturé — exportez en JSON pour sécuriser',4000);
+          var el2=document.getElementById('autosave-ts');
+          if(el2) el2.textContent='⚠ Sauveg. impossible — exportez !';
+        }
+        updateStorageIndicator();
+      });
     }catch(e){
-      // localStorage plein ou non disponible — ignorer silencieusement
-      console.warn('[AspiRo_light] autoSave échoué:',e.message);
+      console.warn('[AspiRo_light] autoSave erreur:',e.message);
     }
   },2000);
 }
 
+// ── Indicateur de taille du stockage local ────────────────────────────────
+function updateStorageIndicator(){
+  var el=document.getElementById('storage-bar');
+  if(!el) return;
+  var bytes=_lastStorageBytes;
+  var mb=(bytes/(1024*1024)).toFixed(1);
+  // Nouvelles limites : IndexedDB permet plusieurs Go (vs 5 Mo localStorage)
+  var LIMIT=500*1024*1024; // 500 Mo de référence pour la barre
+  var pct=Math.min(100, Math.round(bytes/LIMIT*100));
+  var color, msg;
+  if(bytes<50*1024*1024){          // < 50 Mo : largement OK
+    color='#22c55e';
+    msg='Stockage : '+mb+' Mo';
+  } else if(bytes<200*1024*1024){  // 50-200 Mo : surveiller mais OK
+    color='#eab308';
+    msg='Stockage : '+mb+' Mo · espace large';
+  } else if(bytes<400*1024*1024){  // 200-400 Mo : commence à être lourd
+    color='#f97316';
+    msg='⚠ Stockage : '+mb+' Mo — exportez en JSON par sécurité';
+  } else {                          // > 400 Mo : très lourd
+    color='#ef4444';
+    msg='⛔ Stockage : '+mb+' Mo — exportez maintenant !';
+  }
+  el.innerHTML=
+    '<div style="display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--surf);border:1px solid '+color+';border-radius:6px;font-size:11px">'
+    +'<div style="flex:0 0 80px;height:6px;background:var(--border);border-radius:3px;overflow:hidden">'
+    +'<div style="height:6px;background:'+color+';width:'+pct+'%;transition:width .3s"></div>'
+    +'</div>'
+    +'<span style="color:'+color+';font-weight:600">'+msg+'</span>'
+    +'</div>';
+}
+
 function autoRestore(){
-  // Appelée au démarrage si pas de données injectées via saveHTML()
-  try{
-    var json=localStorage.getItem(AUTOSAVE_KEY);
-    if(!json)return false;
-    var data=JSON.parse(json);
-    if(!data||!data._version)return false;
-    // Vérifier qu'il y a des données non vides
-    var hasData=(data.machines&&data.machines.length>0)||(data.client&&data.client.societe)||
-                (data.atelier&&data.atelier.nom)||(data.network&&data.network.nodes&&data.network.nodes.length>0);
-    if(!hasData)return false;
-    return data;
-  }catch(e){return false;}
+  return new Promise(function(resolve){
+    idbGet(AUTOSAVE_KEY).then(function(json){
+      function tryParse(j){
+        try{
+          var data=JSON.parse(j);
+          if(!data||!data._version)return false;
+          var hasData=(data.machines&&data.machines.length>0)||(data.client&&data.client.societe)||
+                      (data.atelier&&data.atelier.nom)||(data.network&&data.network.nodes&&data.network.nodes.length>0);
+          return hasData?data:false;
+        }catch(e){return false;}
+      }
+      if(json){
+        var d=tryParse(json);
+        if(d){resolve(d);return;}
+      }
+      try{
+        var lsJson=localStorage.getItem(AUTOSAVE_KEY);
+        if(lsJson){
+          var d2=tryParse(lsJson);
+          if(d2){
+            idbSet(AUTOSAVE_KEY,lsJson).then(function(){
+              try{localStorage.removeItem(AUTOSAVE_KEY);}catch(e){}
+            });
+            resolve(d2);return;
+          }
+        }
+      }catch(e){}
+      resolve(false);
+    });
+  });
 }
 
 function clearAutoSave(){
   try{localStorage.removeItem(AUTOSAVE_KEY);}catch(e){}
+  idbRemove(AUTOSAVE_KEY);
   var el=document.getElementById('autosave-ts');
   if(el)el.textContent='';
 }
@@ -6019,25 +6132,27 @@ if(window._ASPIRO_DATA){
   // Nettoyer l'autosauvegarde car on charge un fichier explicite
   clearAutoSave();
 } else {
-  var restored=autoRestore();
-  if(restored){
-    // Afficher une notification de restauration
-    setTimeout(function(){
-      var banner=document.createElement('div');
-      banner.style.cssText='position:fixed;top:0;left:0;right:0;z-index:9999;background:#1a1f2e;'
-        +'border-bottom:2px solid #f97316;padding:12px 16px;display:flex;align-items:center;'
-        +'gap:10px;font-size:13px;color:#e2e8f0;font-family:system-ui';
-      banner.innerHTML='<span style="font-size:18px">🔄</span>'
-        +'<span style="flex:1"><strong style="color:#f97316">Données restaurées</strong> — relevé récupéré depuis la sauvegarde automatique</span>'
-        +'<button onclick="this.parentNode.remove()" style="background:none;border:none;color:#94a3b8;font-size:20px;cursor:pointer;padding:0 4px">×</button>';
-      document.body.appendChild(banner);
-      setTimeout(function(){if(banner.parentNode)banner.parentNode.removeChild(banner);},5000);
-    },600);
-    loadData(restored);
-  } else {
-    addMachine();
-    buildSimul();
-  }
+  idbInit().then(function(){
+    return autoRestore();
+  }).then(function(restored){
+    if(restored){
+      setTimeout(function(){
+        var banner=document.createElement('div');
+        banner.style.cssText='position:fixed;top:0;left:0;right:0;z-index:9999;background:#1a1f2e;'
+          +'border-bottom:2px solid #f97316;padding:12px 16px;display:flex;align-items:center;'
+          +'gap:10px;font-size:13px;color:#e2e8f0;font-family:system-ui';
+        banner.innerHTML='<span style="font-size:18px">🔄</span>'
+          +'<span style="flex:1"><strong style="color:#f97316">Données restaurées</strong> — relevé récupéré depuis la sauvegarde automatique</span>'
+          +'<button onclick="this.parentNode.remove()" style="background:none;border:none;color:#94a3b8;font-size:20px;cursor:pointer;padding:0 4px">×</button>';
+        document.body.appendChild(banner);
+        setTimeout(function(){if(banner.parentNode)banner.parentNode.removeChild(banner);},5000);
+      },600);
+      loadData(restored);
+    } else {
+      addMachine();
+      buildSimul();
+    }
+  });
 }
 </script>
 <script>
@@ -6103,7 +6218,7 @@ if(window._ASPIRO_DATA){
 
   // Service Worker via blob (pour cache offline)
   if('serviceWorker' in navigator){
-    var sw='var CACHE="aspiro-light-mmi-v1";self.addEventListener("install",function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(["./"]);}))});self.addEventListener("fetch",function(e){e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request);}));});';
+    var sw='var CACHE="aspiro-light-mmi-v11";self.addEventListener("install",function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(["./"]);}))});self.addEventListener("fetch",function(e){e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request);}));});';
     var blob=new Blob([sw],{type:'application/javascript'});
     navigator.serviceWorker.register(URL.createObjectURL(blob),{scope:'./'}).catch(function(){});
   }
