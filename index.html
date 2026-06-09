@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
-<title>AspiRo_light V1.1 - relevés</title>
+<title>AspiRo_light V1.1.1 - relevés</title>
 
 <!-- ══ PWA META TAGS ══ -->
 <meta name="application-name" content="AspiRo_light"/>
@@ -26,7 +26,7 @@
 <!-- Manifest PWA inline -->
 <link rel="manifest" href="data:application/manifest+json,{
   %22name%22:%22AspiRo_light%20-%20relev%C3%A9s%22,
-  %22short_name%22:%22AspiRo_light%20V1.1%22,
+  %22short_name%22:%22AspiRo_light%20V1.1.1%22,
   %22description%22:%22AspiRo_light%20%E2%80%94%20Outil%20relev%C3%A9%20r%C3%A9seau%20d'aspiration%22,
   %22start_url%22:%22./%22,
   %22display%22:%22standalone%22,
@@ -287,7 +287,7 @@ tr:last-child td{border-bottom:none}
       Accéder →
     </button>
   </div>
-  <div style="font-size:10px;color:#334155">AspiRo_light v1.1 · by Carlos L.</div>
+  <div style="font-size:10px;color:#334155">AspiRo_light v1.1.1 · by Carlos L.</div>
 </div>
 
 <script>
@@ -328,11 +328,11 @@ function checkLogin(){
 <div class="hdr">
   <span style="font-size:28px">🌬️</span>
   <div>
-    <div class="hdr-t">AspiRo_light — v1.1</div>
+    <div class="hdr-t">AspiRo_light — v1.1.1</div>
     <div class="hdr-s">Outil — Relevé réseau d'aspiration</div>
   </div>
   <div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
-  <div class="hdr-v">v1.1 LIGHT</div>
+  <div class="hdr-v">v1.1.1 LIGHT</div>
   <div id="autosave-ts" style="font-size:9px;color:var(--txt3)"></div>
   <div id="storage-bar" style="margin-top:4px"></div>
 </div>
@@ -1106,7 +1106,7 @@ function checkLogin(){
 </div>
 
 <div style="text-align:center;padding:18px 0 8px;font-size:10px;color:var(--txt3);letter-spacing:.5px;user-select:none">
-  AspiRo_light v1.1 &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; by Carlos L.
+  AspiRo_light v1.1.1 &nbsp;·&nbsp; 2026 &nbsp;·&nbsp; by Carlos L.
 </div>
 
 <script>
@@ -2262,7 +2262,7 @@ function deleteSelected(){
     if(nB)networkB.piquages=networkB.piquages.filter(function(p){return!(p.pts&&p.pts.length>0&&segLen(p.pts[0],nB)<0.2);});
     networkB.nodes.splice(el.idx,1);
   }
-  else if(el.type==='textLabel'){network.textLabels=network.textLabels.filter(function(tl){return tl.id!==el.id;});}
+  else if(el.type==='textLabel'){network.textLabels.splice(el.idx,1);}
   else if(el.type==='batiWall'){network.batiWalls.splice(el.idx,1);updateVolFromBati();}
   else if(el.type==='airEntree'){network.airEntrees=network.airEntrees.filter(function(a){return a.id!==el.id;});}
   else if(el.type==='armoire'){network.armoires.splice(el.idx,1);}
@@ -2329,9 +2329,9 @@ function findNearDraggable(mx,my){
   networkB.nodes.forEach(function(n,i){var d2=segLen(n,{x:mx,y:my});if(d2<tol&&d2<bestD){bestD=d2;best={type:'nodeB',idx:i};}});
   network.totems.forEach(function(t,j){var d3=segLen(t,{x:mx,y:my});if(d3<tol&&d3<bestD){bestD=d3;best={type:'totem',idx:j};}});
   // Étiquettes texte déplaçables
-  (network.textLabels||[]).forEach(function(tl){
+  (network.textLabels||[]).forEach(function(tl,tli){
     var dtl=segLen(tl,{x:mx,y:my});
-    if(dtl<tol&&dtl<bestD){bestD=dtl;best={type:'textLabel',id:tl.id,label:'"'+tl.text+'"'};}
+    if(dtl<tol&&dtl<bestD){bestD=dtl;best={type:'textLabel',idx:tli,label:'"'+tl.text+'"'};}
   });
   // Points du contour bâtiment — tolérance réduite pour ne pas voler la priorité aux ouvertures
   network.batiWalls.forEach(function(wall,wi){
@@ -2449,9 +2449,9 @@ function findNearAny(mx,my){
     if(d7<tol&&d7<bestD){bestD=d7;best={type:'nodeB',idx:i,label:'Nœud B'+(i+1)};}
   });
   // Étiquettes texte sélectionnables
-  (network.textLabels||[]).forEach(function(tl){
+  (network.textLabels||[]).forEach(function(tl,tli){
     var d8=segLen(tl,{x:mx,y:my});
-    if(d8<hitTolLarge()&&d8<bestD){bestD=d8;best={type:'textLabel',id:tl.id,label:'"'+tl.text+'"'};}
+    if(d8<hitTolLarge()&&d8<bestD){bestD=d8;best={type:'textLabel',idx:tli,label:'"'+tl.text+'"'};}
   });
   return best;
 }
@@ -2582,7 +2582,7 @@ function doDrag(cx,cy){
     if(arm){arm.x=mm.mx;arm.y=mm.my;}
   }
   else if(dragging.type==='textLabel'){
-    var tl=network.textLabels&&network.textLabels.find(function(t){return t.id===dragging.id;});
+    var tl=network.textLabels&&network.textLabels[dragging.idx];
     if(tl){tl.x=mm.mx;tl.y=mm.my;}
   }
   else if(dragging.type==='banane'){
@@ -3371,7 +3371,7 @@ function drawPlan(cv,forPdf){
     ctx.fillStyle='rgba(249,115,22,.7)';ctx.font='10px system-ui';ctx.textAlign='left';ctx.fillText(hints[planMode]||'',PAD,H-PAD+12);
   }
   ctx.fillStyle=forPdf?'#94a3b8':'#64748b';ctx.font='8px system-ui';ctx.textAlign='right';
-  ctx.fillText((document.getElementById('a-nom').value||'Atelier')+' — AspiRo_light v1.1',W-PAD,H-PAD+12);
+  ctx.fillText((document.getElementById('a-nom').value||'Atelier')+' — AspiRo_light v1.1.1',W-PAD,H-PAD+12);
 }
 
 // ── SCHEMA LINEAIRE (fond blanc, anti-chevauchement, distances) ───────────────
@@ -3403,7 +3403,7 @@ function drawSchemaNet(netId){
   // Titre
   var netColor=netId==='B'?'#0e7490':'#334155';
   ctx.fillStyle=netColor;ctx.font='bold 11px system-ui';ctx.textAlign='left';
-  ctx.fillText('Schéma linéaire Réseau '+netId+' — '+(document.getElementById('a-nom').value||'Atelier')+' — AspiRo_light v1.1',MARG,16);
+  ctx.fillText('Schéma linéaire Réseau '+netId+' — '+(document.getElementById('a-nom').value||'Atelier')+' — AspiRo_light v1.1.1',MARG,16);
   // Axe collecteur (couleur selon réseau)
   var collColor=netId==='B'?'#0e7490':'#334155';
   ctx.strokeStyle=collColor;ctx.lineWidth=2.5;ctx.setLineDash([]);
@@ -3619,7 +3619,7 @@ function drawSchema(){
 
   // Titre
   ctx.fillStyle='#334155';ctx.font='bold 11px system-ui';ctx.textAlign='left';
-  ctx.fillText('Schéma linéaire — '+(document.getElementById('a-nom').value||'Atelier')+' — AspiRo_light v1.1',MARG,16);
+  ctx.fillText('Schéma linéaire — '+(document.getElementById('a-nom').value||'Atelier')+' — AspiRo_light v1.1.1',MARG,16);
   // Légende simple
   var lx=MARG;
   [['#2563eb','Actif (simul.)','circle'],['#475569','Machine','rect']].forEach(function(l){
@@ -5684,7 +5684,7 @@ function exportPDF(){
   var machinesH=machines.map(function(m,i){
     var dist=getMachineDistance(m.id),q=machineQ(m),brD=machineBranchDiam(m),brVv=machineBranchV(m),dp=machineDP(m)||null;if(m.dpManuel)dp=parseInt(m.dpManuel);
     var raccInfo=m.raccords.map(function(r,ri){var dd=parseFloat(r.d)||0,rq=dd?calcQ(dd,getMachineV(m)):0;return dd?'Racc #'+(ri+1)+' O'+dd+'mm / '+rq+' m³/h':null;}).filter(Boolean).join(' — ');
-    var phH=(m.photos||[]).filter(function(ph){return ph;}).map(function(ph){return '<img src="'+ph+'" style="width:88px;height:66px;object-fit:cover;border-radius:4px;border:1px solid #e2e8f0;margin:2px">';}).join('');
+    var phH=(m.photos||[]).filter(function(ph){return ph;}).map(function(ph){return '<img src="'+ph+'" style="width:176px;height:132px;object-fit:cover;border-radius:4px;border:1px solid #e2e8f0;margin:2px">';}).join('');
     return '<div style="page-break-inside:avoid;border:1px solid #e2e8f0;border-left:4px solid '+(simActive[m.id]?'#2563eb':'#f97316')+';border-radius:6px;padding:11px;margin-bottom:9px">'
       +'<div style="display:flex;justify-content:space-between;margin-bottom:7px"><div><strong>'+(i+1)+'. '+(m.name||'Machine sans nom')+'</strong>'+(m.type?'<span style="margin-left:7px;font-size:10px;color:#64748b">'+m.type+'</span>':'')+(simActive[m.id]?'<span style="margin-left:7px;background:#dbeafe;color:#1d4ed8;padding:1px 6px;border-radius:9px;font-size:10px;font-weight:700">ACTIF</span>':'')+'</div>'+(dp!==null?'<span style="background:#f1f5f9;color:#475569;padding:2px 8px;border-radius:9px;font-size:11px;font-weight:700">'+dp+' Pa</span>':'')+'</div>'
       +'<table style="font-size:11px;margin-bottom:7px"><tr style="background:#f8fafc"><td style="padding:3px 7px;border:1px solid #e2e8f0"><b>Distance</b></td><td style="padding:3px 7px;border:1px solid #e2e8f0">'+(dist!==null?dist+' m':'non tracé')+'</td><td style="padding:3px 7px;border:1px solid #e2e8f0"><b>Q total</b></td><td style="padding:3px 7px;border:1px solid #e2e8f0">'+q+' m³/h</td></tr><tr><td style="padding:3px 7px;border:1px solid #e2e8f0"><b>Ø descente</b></td><td style="padding:3px 7px;border:1px solid #e2e8f0">O'+brD+' mm</td><td style="padding:3px 7px;border:1px solid #e2e8f0"><b>v descente</b></td><td style="padding:3px 7px;border:1px solid #e2e8f0">'+brVv+' m/s</td></tr><tr style="background:#f8fafc"><td colspan="4" style="padding:3px 7px;border:1px solid #e2e8f0">'+raccInfo+'</td></tr></table>'
@@ -5696,8 +5696,8 @@ function exportPDF(){
       +'<td>'+(i+1)+'</td><td><b>'+(m.name||'—')+'</b>'+(simActive[m.id]?'<span style="margin-left:4px;background:#dbeafe;color:#1d4ed8;padding:1px 4px;border-radius:7px;font-size:9px">ACTIF</span>':'')+'</td>'
       +'<td>'+(dist!==null?dist+' m':'—')+'</td><td>'+m.raccords.length+'</td><td>'+q+'</td><td>O'+brD+'</td><td>'+brVv+'</td><td><b>'+(dp!==null?dp:'—')+'</b></td></tr>';
   }).join('');
-  var phGenH=photosGen.length?photosGen.map(function(ph){var src=typeof ph==='string'?ph:(ph&&ph.data?ph.data:'');return src?'<img src="'+src+'" style="width:170px;height:128px;object-fit:cover;border-radius:5px;border:1px solid #e2e8f0;margin:3px">':'';}).join(''):'<span style="color:#999">Aucune photo</span>';
-  var phDemH=photosDem.length?photosDem.map(function(ph){var src=typeof ph==='string'?ph:(ph&&ph.data?ph.data:'');return src?'<img src="'+src+'" style="width:170px;height:128px;object-fit:cover;border-radius:5px;border:1px solid #e2e8f0;margin:3px">':'';}).join(''):'';
+  var phGenH=photosGen.length?photosGen.map(function(ph){var src=typeof ph==='string'?ph:(ph&&ph.data?ph.data:'');return src?'<img src="'+src+'" style="width:340px;height:256px;object-fit:cover;border-radius:5px;border:1px solid #e2e8f0;margin:3px">':'';}).join(''):'<span style="color:#999">Aucune photo</span>';
+  var phDemH=photosDem.length?photosDem.map(function(ph){var src=typeof ph==='string'?ph:(ph&&ph.data?ph.data:'');return src?'<img src="'+src+'" style="width:340px;height:256px;object-fit:cover;border-radius:5px;border:1px solid #e2e8f0;margin:3px">':'';}).join(''):'';
   // ── Données pour le PDF ──────────────────────────────────────────────────
   var clt=getClientData(),env=getEnvData(),tech=getTechnicien();
   var html='<!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"/><title>'+pdfFilename+'</title>'
@@ -5725,7 +5725,7 @@ function exportPDF(){
     +'@page{margin:1.4cm}@media print{.page{padding:0}}'
     +'</style></head><body>'
     +'<div class="cover">'
-    +'<h1>AspiRo_light — v1.1</h1>'
+    +'<h1>AspiRo_light — v1.1.1</h1>'
     +'<div class="sub">Outil — Relevé réseau d\'aspiration</div>'
     +(clt.societe?'<div style="font-size:18px;font-weight:800;color:#fff;margin:8px 0">'+clt.societe+'</div>':'')
     +(clt.adresse?'<div style="font-size:12px;color:#94a3b8;margin-bottom:4px">📍 '+clt.adresse+'</div>':'')
@@ -5759,7 +5759,7 @@ function exportPDF(){
       +'<tr><td style="font-weight:700">Chantier</td><td>'+(env.chantier==='complique'?'<strong style="color:#d97706">Compliqué</strong>':'Standard')+'</td></tr>'
       +(env.autres?'<tr><td style="font-weight:700">Autres infos</td><td>'+env.autres+'</td></tr>':'')
       +'</tbody></table>'
-      +(photosMatiere.length?'<div class="photos">'+photosMatiere.map(function(p){var src=typeof p==='string'?p:(p&&p.data?p.data:'');return src?'<img src="'+src+'" style="width:170px;height:128px;object-fit:cover;border-radius:5px;border:1px solid #e2e8f0;margin:3px">':'';}).join('')+'</div>':'')
+      +(photosMatiere.length?'<div class="photos">'+photosMatiere.map(function(p){var src=typeof p==='string'?p:(p&&p.data?p.data:'');return src?'<img src="'+src+'" style="width:340px;height:256px;object-fit:cover;border-radius:5px;border:1px solid #e2e8f0;margin:3px">':'';}).join('')+'</div>':'')
     :'')
     +'<div class="section"><h2>1. Plan du réseau</h2>'
     +'<div style="font-size:11px;color:#64748b;margin:-6px 0 8px">Atelier : '+(document.getElementById('a-nom').value||'—')+' · Dimensions : '+(document.getElementById('a-larg').value||'?')+'m × '+(document.getElementById('a-long').value||'?')+'m</div></div>'
@@ -5774,7 +5774,7 @@ function exportPDF(){
     +'<div class="section"><h2>3. Simultanéité — '+simCount+' utilisateur(s)</h2></div>'
     +'<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:10px 0">'
     +'<div style="border:2px solid #f97316;border-radius:8px;padding:14px;text-align:center"><div style="font-size:11px;font-weight:700;color:#f97316;text-transform:uppercase;margin-bottom:6px">Débit simultané</div><div style="font-size:24px;font-weight:800;color:#f97316">'+simQ+'</div><div style="font-size:11px;color:#475569;margin-top:2px">m³/h</div></div>'
-    +'<div style="border:2px solid #0284c7;border-radius:8px;padding:14px;text-align:center"><div style="font-size:11px;font-weight:700;color:#0284c7;text-transform:uppercase;margin-bottom:6px">Taux de simultanéité</div><div style="font-size:24px;font-weight:800;color:#0284c7">'+(tQ2>0?Math.round(simQ/tQ2*100):0)+'%</div><div style="font-size:11px;color:#475569;margin-top:2px">'+actives.length+' / '+machines.length+' machines actives</div></div>'
+    +'<div style="border:2px solid #0284c7;border-radius:8px;padding:14px;text-align:center"><div style="font-size:11px;font-weight:700;color:#0284c7;text-transform:uppercase;margin-bottom:6px">Taux de simultanéité</div><div style="font-size:24px;font-weight:800;color:#0284c7">'+((function(){var p=machines.filter(function(m){return!isNettoyage(m);}).reduce(function(s,m){return s+machineQ(m);},0);return p>0?Math.round(simQ/p*100):0;})())+'%</div><div style="font-size:11px;color:#475569;margin-top:2px">'+actives.length+' / '+machines.filter(function(m){return!isNettoyage(m);}).length+' machines actives</div></div>'
     +'</div>'
     +'<table><thead><tr><th>#</th><th>Machine</th><th>État simul.</th><th>Q (m³/h)</th></tr></thead><tbody>'
     +machines.map(function(m,i){var act=!!simActive[m.id];return '<tr style="'+(act?'background:#fff7ed':'')+'"><td>'+(i+1)+'</td><td>'+(m.name||'—')+'</td><td style="text-align:center">'+(act?'<strong style="color:#f97316">▶ Actif</strong>':'<span style="color:#94a3b8">✕ Trappe</span>')+'</td><td style="text-align:right">'+machineQ(m)+'</td></tr>';}).join('')
@@ -5871,7 +5871,7 @@ function exportPDF(){
       }
       return out;
     })()
-    +'<div style="margin-top:22px;padding-top:11px;border-top:1px solid #e2e8f0;font-size:10px;color:#94a3b8;text-align:center">AspiRo_light v1.1 — '+new Date().toLocaleDateString('fr-FR')+' — Darcy-Weisbach lambda='+p.lam+' K_c=0.5 K_t=1.0 K_e=0.5</div>'
+    +'<div style="margin-top:22px;padding-top:11px;border-top:1px solid #e2e8f0;font-size:10px;color:#94a3b8;text-align:center">AspiRo_light v1.1.1 — '+new Date().toLocaleDateString('fr-FR')+' — Darcy-Weisbach lambda='+p.lam+' K_c=0.5 K_t=1.0 K_e=0.5</div>'
     +'<div style="position:fixed;top:14px;right:16px;z-index:999">'
     +'<button onclick="window.print()" style="background:#f97316;color:#fff;border:none;border-radius:7px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(249,115,22,.35)">🖨️ Imprimer / Enregistrer PDF</button>'
     +'</div>'
@@ -6218,7 +6218,7 @@ if(window._ASPIRO_DATA){
 
   // Service Worker via blob (pour cache offline)
   if('serviceWorker' in navigator){
-    var sw='var CACHE="aspiro-light-mmi-v11";self.addEventListener("install",function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(["./"]);}))});self.addEventListener("fetch",function(e){e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request);}));});';
+    var sw='var CACHE="aspiro-light-mmi-v111";self.addEventListener("install",function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(["./"]);}))});self.addEventListener("fetch",function(e){e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request);}));});';
     var blob=new Blob([sw],{type:'application/javascript'});
     navigator.serviceWorker.register(URL.createObjectURL(blob),{scope:'./'}).catch(function(){});
   }
