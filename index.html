@@ -5286,6 +5286,19 @@ function collectAllData(){
       demHInt:document.getElementById('dem-h-int').value,
       demHExt:document.getElementById('dem-h-ext').value,
       demNotes:document.getElementById('dem-notes').value,
+      // Moyens de levage (état coché + jours + charge)
+      levage: (function(){
+        var out={};
+        ['nactel','nactou','chartele','charelev','grue','autre'].forEach(function(k){
+          out[k] = {
+            on: !!(levSt && levSt[k]),
+            j: (document.getElementById('lev-'+k+'-j')||{}).value || '',
+            charge: (document.getElementById('lev-'+k+'-charge')||{}).value || ''
+          };
+        });
+        out.autre.txt = (document.getElementById('lev-autre-txt')||{}).value || '';
+        return out;
+      })(),
       notes:document.getElementById('a-notes').value,
       // Photos stockées directement en base64 string
       photosGen:photosGen.map(function(p){return typeof p==='string'?p:(p&&p.data?p.data:null);}),
@@ -5469,6 +5482,24 @@ function loadData(d){
     if(a.compAir)setComp(true);else setComp(false);
     if(a.compType){var ct=document.getElementById('a-comp-type');if(ct)ct.value=a.compType;}
     if(a.demontage)setDem(true);else setDem(false);
+    // Restauration moyens de levage
+    if(a.levage){
+      ['nactel','nactou','chartele','charelev','grue','autre'].forEach(function(k){
+        var L = a.levage[k]; if(!L) return;
+        // État coché (la fonction toggleLev() bascule, donc on l'appelle si besoin)
+        if(L.on && !levSt[k]) toggleLev(k);
+        else if(!L.on && levSt[k]) toggleLev(k);
+        // Jours
+        var elJ=document.getElementById('lev-'+k+'-j');
+        if(elJ && L.j!==undefined) elJ.value=L.j;
+        // Charge (qui prend en charge)
+        var elC=document.getElementById('lev-'+k+'-charge');
+        if(elC && L.charge!==undefined) elC.value=L.charge;
+      });
+      // Texte libre pour "autre"
+      var elTxt=document.getElementById('lev-autre-txt');
+      if(elTxt && a.levage.autre && a.levage.autre.txt!==undefined) elTxt.value=a.levage.autre.txt;
+    }
     // Recharger photos depuis base64 (format string ou {data:...})
     function toPhotoObj(p){if(!p||p==='[photo]')return null;return{data:typeof p==='string'?p:p.data};}
     if(Array.isArray(a.photosGen))photosGen=a.photosGen.map(toPhotoObj).filter(Boolean);
