@@ -2063,6 +2063,7 @@ function buildSimul(){
     rH+='<div style="font-size:11px;font-weight:800;color:var(--txt2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:7px">Configuration simultanée</div>';
     rH+='<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px">';
     rH+='<thead><tr style="background:var(--surf)">'
+      +'<th style="padding:5px 7px;text-align:center;color:var(--txt3);border-bottom:1px solid var(--border);width:32px">#</th>'
       +'<th style="padding:5px 7px;text-align:left;color:var(--txt3);border-bottom:1px solid var(--border)">Machine</th>'
       +'<th style="padding:5px 7px;text-align:center;color:var(--txt3);border-bottom:1px solid var(--border)">État</th>'
       +'<th style="padding:5px 7px;text-align:right;color:var(--txt3);border-bottom:1px solid var(--border)">Débit</th>'
@@ -2071,7 +2072,10 @@ function buildSimul(){
     allMachinesForTable.forEach(function(m,mi){
       var isOn=isNettoyage(m)?false:!!simActive[m.id];
       var q=isOn?machineQ(m):0;
+      var realIdx=machines.indexOf(m);
+      var machNum=realIdx>=0?(realIdx+1):'?';
       rH+='<tr style="border-bottom:1px solid rgba(37,45,66,.4);'+(isOn?'':'opacity:.45')+'">'
+        +'<td style="padding:4px 7px;text-align:center;font-family:monospace;font-weight:700;color:'+(isOn?'var(--acc)':'var(--txt3)')+'">'+machNum+'</td>'
         +'<td style="padding:4px 7px;font-weight:'+(isOn?'600':'400')+'">'+( m.name||m.type||'M'+(mi+1))+'</td>'
         +'<td style="padding:4px 7px;text-align:center">'
           +(isOn?'<span style="color:var(--blue);font-size:10px;font-weight:700">▶ ouverte</span>'
