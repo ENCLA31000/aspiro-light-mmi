@@ -1718,8 +1718,13 @@ function machineDP(m){
 function machineFullPath(m, simQ, p){
   var dist=getMachineDistance(m.id)||0;
   var brD=machineBranchDiam(m), brQ=machineQ(m);
-  // ΔP branche descente
-  var dpBranch=brD&&brQ&&dist?calcDP(dist,brD,brQ,machineOpts(m,p)):0;
+  // ΔP branche descente — respecte le ΔP manuel s'il est saisi
+  var dpBranch;
+  if(m.dpManuel){
+    dpBranch=parseInt(m.dpManuel)||0;
+  } else {
+    dpBranch=brD&&brQ&&dist?calcDP(dist,brD,brQ,machineOpts(m,p)):0;
+  }
   // Longueur collecteur depuis le nœud de raccordement jusqu'à l'ASPI
   var _netId=getMachineNetId(m.id);
   var piq=getNetPiquages(_netId).find(function(pq){return pq.machineId===m.id;});
